@@ -29,7 +29,7 @@ class Conta {
     console.log(`
       Conta: ${this.numero}
       Titular: ${this.titular}
-      Saldo atual: ${this.saldo}
+      Saldo atual: R$${this.saldo.toFixed(2)}
     `);
   }
 }

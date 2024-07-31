@@ -26,7 +26,7 @@ function criarConta() {
         criarContaPoupanca();
         break;
       case 0:
-        console.log('Retornando ao menu inicial');
+        console.log('Encerrando cadastro. Retornando ao menu inicial.');
         continuar = false;
     }
   } while(continuar);
@@ -38,7 +38,7 @@ function criarContaCorrente() {
   novaContaCorrente.definirNumeroConta('corrente', contasCorrente);
   contasCorrente.push(novaContaCorrente);
   console.log(`
-    Número da conta: ${contasCorrente[contasCorrente.length - 1].numero} | Titular: ${titular};
+    Número da conta corrente: ${contasCorrente[contasCorrente.length - 1].numero} | Titular: ${titular};
   `)
 }
 
@@ -47,6 +47,9 @@ function criarContaPoupanca() {
   let novaContaPoupanca = new ContaPoupanca(titular);
   novaContaPoupanca.definirNumeroConta('poupanca', contasPoupanca);
   contasPoupanca.push(novaContaPoupanca);
+  console.log(`
+    Número da conta poupança: ${contasPoupanca[contasPoupanca.length - 1].numero} | Titular: ${titular};
+  `)
 }
 
 /*
@@ -54,7 +57,9 @@ function criarContaPoupanca() {
 */
 function acessarConta() {
   let numeroConta = prompt('Qual o tipo e o número da conta? ')
-  let tipoConta = numeroConta.slice(0, 1);
+  let tipoConta = numeroConta.slice(0, 2);
+  console.log(tipoConta)
+  
   if (tipoConta === 'CC') {
     menuConta(contasCorrente, numeroConta);
   } else {
@@ -62,8 +67,10 @@ function acessarConta() {
   }
 }
 
+//menu de acesso à conta
 function menuConta(listaContas, numeroConta) {
   let continuar = true;
+
   do {
     console.log(`
       Operações:
@@ -72,16 +79,15 @@ function menuConta(listaContas, numeroConta) {
         3 - Exibir saldo
         0 - Cancelar
     `);
-    let opcao = +prompt('Qual das operações acima deseja realizar? ');
+    let opcao = prompt('Qual das operações acima deseja realizar? ');
 
-    switch(opcao) {
+    switch(Number(opcao)) {
       case 1:
-        listaContas.filter(conta => {
-          if (conta.numero === numeroConta) {
+          console.log(listaContas);
+          listaContas.filter(conta => {
             let valor = +prompt('Qual o valor a depositar? ');
             conta.depositar(valor);
-          }
-        });
+          })
         break;
       case 2:
         listaContas.filter(conta => {
